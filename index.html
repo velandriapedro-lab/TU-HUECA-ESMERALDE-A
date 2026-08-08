@@ -181,10 +181,23 @@ footer{
 
 <label>¿Cómo deseas recibir tu pedido?</label>
 
-<select id="tipo">
+<select id="tipo" onchange="mostrarDireccion()">
   <option value="Domicilio">🛵 Domicilio</option>
   <option value="Retiro en restaurante">🏪 Retirar en el restaurante</option>
 </select>
+
+<div id="datosDomicilio">
+
+  <label>📍 Dirección de entrega</label>
+  <input id="direccion" type="text" placeholder="Ej: Calle principal y número de casa">
+
+  <button type="button" class="full" onclick="obtenerUbicacion()">
+    📍 Compartir mi ubicación
+  </button>
+
+  <p id="ubicacionEstado"></p>
+
+</div>
 
 <button class="full" onclick="enviarPedido()">
   📲 Enviar pedido por WhatsApp
@@ -270,7 +283,52 @@ function quitar(indice){
 
   mostrarCarrito();
 }
+function mostrarDireccion(){
 
+  let tipo = document.getElementById("tipo").value;
+  let datos = document.getElementById("datosDomicilio");
+
+  if(tipo === "Domicilio"){
+    datos.style.display = "block";
+  }else{
+    datos.style.display = "none";
+  }
+}
+
+function obtenerUbicacion(){
+
+  let estado = document.getElementById("ubicacionEstado");
+
+  if(!navigator.geolocation){
+    estado.innerText = "Tu teléfono no permite obtener la ubicación.";
+    return;
+  }
+
+  estado.innerText = "📍 Obteniendo ubicación...";
+
+  navigator.geolocation.getCurrentPosition(
+
+    function(position){
+
+      let latitud = position.coords.latitude;
+      let longitud = position.coords.longitude;
+
+      window.ubicacionCliente =
+        "https://www.google.com/maps?q=" +
+        latitud + "," + longitud;
+
+      estado.innerHTML =
+        "✅ Ubicación obtenida correctamente.";
+
+    },
+
+    function(){
+      estado.innerText =
+        "❌ No se pudo obtener la ubicación. Revisa los permisos del navegador.";
+    }
+
+  );
+}
 function enviarPedido(){
 
   if(carrito.length === 0){
@@ -281,6 +339,8 @@ function enviarPedido(){
   let nombre = document.getElementById("nombre").value.trim();
   let telefono = document.getElementById("telefono").value.trim();
   let tipo = document.getElementById("tipo").value;
+  let direccion = document.getElementById("direccion").value.trim();
+let mapa = window.ubicacionCliente || "";
 
   if(nombre === ""){
     alert("Por favor escribe tu nombre.");
@@ -297,6 +357,20 @@ function enviarPedido(){
   mensaje += "👤 Cliente: " + nombre + "%0A";
   mensaje += "📞 Teléfono: " + telefono + "%0A";
   mensaje += "📦 Tipo: " + tipo + "%0A%0A";
+  if(tipo === "Domicilio"){
+
+  mensaje += "🏠 Dirección: " +
+    (direccion || "No indicada") +
+    "%0A";
+
+  if(mapa !== ""){
+    mensaje += "📍 Ubicación: " +
+      mapa +
+      "%0A";
+  }
+
+  mensaje += "%0A";
+      }
 
   mensaje += "*DETALLE DEL PEDIDO:*%0A";
 
