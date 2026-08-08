@@ -1,89 +1,115 @@
-Perfecto. Ahora pega este código completo en ese cuadro. Esta será nuestra primera pantalla de Tu Hueca Esmeraldeña, con menú, pedido, reserva y ubicación.
+Perfecto. Ahora sí. Pega todo este código completo en el cuadro vacío. Esta versión ya incluye el carrito y prepara el pedido para enviarlo por WhatsApp al número que me diste.
 Escritura
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tu Hueca Esmeraldeña</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #fff8ef;
-      color: #333;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tu Hueca Esmeraldeña</title>
 
-    header {
-      background: #008f5a;
-      color: white;
-      text-align: center;
-      padding: 25px 15px;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#fff8ef;
+  color:#333;
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
+header{
+  background:#008f5a;
+  color:white;
+  text-align:center;
+  padding:25px 15px;
+}
 
-    header p {
-      margin: 8px 0 0;
-    }
+header h1{
+  margin:0;
+  font-size:28px;
+}
 
-    .container {
-      padding: 20px;
-    }
+.container{
+  padding:18px;
+  max-width:600px;
+  margin:auto;
+}
 
-    .card {
-      background: white;
-      border-radius: 15px;
-      padding: 18px;
-      margin-bottom: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
+.card{
+  background:white;
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
 
-    .card h2 {
-      margin-top: 0;
-      color: #008f5a;
-    }
+h2{
+  color:#008f5a;
+}
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 10px;
-      padding: 14px;
-      margin-top: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      background: #008f5a;
-      color: white;
-    }
+.menu-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #ddd;
+  padding:14px 0;
+}
 
-    button:hover {
-      opacity: 0.9;
-    }
+.menu-item:last-child{
+  border-bottom:none;
+}
 
-    .menu-item {
-      border-bottom: 1px solid #ddd;
-      padding: 12px 0;
-    }
+.price{
+  font-weight:bold;
+}
 
-    .menu-item:last-child {
-      border-bottom: none;
-    }
+.menu-item button{
+  width:auto;
+  padding:9px 14px;
+  margin:0 0 0 10px;
+}
 
-    .price {
-      font-weight: bold;
-      float: right;
-    }
+button{
+  border:none;
+  border-radius:10px;
+  padding:13px;
+  font-size:16px;
+  font-weight:bold;
+  background:#008f5a;
+  color:white;
+  cursor:pointer;
+}
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #666;
-    }
-  </style>
+.full{
+  width:100%;
+  margin-top:10px;
+}
+
+input, select{
+  width:100%;
+  box-sizing:border-box;
+  padding:12px;
+  margin:7px 0 12px;
+  border:1px solid #ccc;
+  border-radius:9px;
+  font-size:16px;
+}
+
+.cart-item{
+  padding:10px 0;
+  border-bottom:1px solid #ddd;
+}
+
+.total{
+  font-size:20px;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+footer{
+  text-align:center;
+  padding:20px;
+  color:#666;
+}
+</style>
 </head>
 
 <body>
@@ -95,85 +121,215 @@ Escritura
 
 <div class="container">
 
-  <div class="card">
-    <h2>🍴 Menú de hoy</h2>
+<div class="card">
+<h2>🍴 Menú de hoy</h2>
 
-    <div class="menu-item">
-      Ceviche de camarón
-      <span class="price">$8</span>
-    </div>
-
-    <div class="menu-item">
-      Encocado de pescado
-      <span class="price">$10</span>
-    </div>
-
-    <div class="menu-item">
-      Bolón mixto
-      <span class="price">$5</span>
-    </div>
-
-    <div class="menu-item">
-      Corviche
-      <span class="price">$2</span>
-    </div>
-
-    <button onclick="hacerPedido()">🛵 Hacer pedido</button>
+<div class="menu-item">
+  <div>
+    <strong>Ceviche de camarón</strong><br>
+    <span class="price">$8.00</span>
   </div>
+  <button onclick="agregar('Ceviche de camarón',8)">Agregar</button>
+</div>
 
-  <div class="card">
-    <h2>📅 Reservar una mesa</h2>
-    <p>Solicita tu reserva de manera rápida.</p>
-    <button onclick="reservar()">Reservar mesa</button>
+<div class="menu-item">
+  <div>
+    <strong>Encocado de pescado</strong><br>
+    <span class="price">$10.00</span>
   </div>
+  <button onclick="agregar('Encocado de pescado',10)">Agregar</button>
+</div>
 
-  <div class="card">
-    <h2>📍 Enviar ubicación</h2>
-    <p>Comparte tu ubicación para facilitar la entrega.</p>
-    <button onclick="ubicacion()">Compartir ubicación</button>
+<div class="menu-item">
+  <div>
+    <strong>Bolón mixto</strong><br>
+    <span class="price">$5.00</span>
   </div>
+  <button onclick="agregar('Bolón mixto',5)">Agregar</button>
+</div>
 
-  <div class="card">
-    <h2>🕐 Horarios</h2>
-    <p>Lunes a domingo</p>
-    <p><strong>07:00 AM - 16:00 PM</strong></p>
+<div class="menu-item">
+  <div>
+    <strong>Corviche</strong><br>
+    <span class="price">$2.00</span>
   </div>
+  <button onclick="agregar('Corviche',2)">Agregar</button>
+</div>
+
+</div>
+
+<div class="card">
+<h2>🛒 Mi pedido</h2>
+
+<div id="carrito">
+  <p>Aún no has agregado productos.</p>
+</div>
+
+<div class="total">
+  Total: $<span id="total">0.00</span>
+</div>
+</div>
+
+<div class="card">
+<h2>👤 Datos del cliente</h2>
+
+<label>Nombre</label>
+<input id="nombre" type="text" placeholder="Escribe tu nombre">
+
+<label>Teléfono</label>
+<input id="telefono" type="tel" placeholder="Tu número de teléfono">
+
+<label>¿Cómo deseas recibir tu pedido?</label>
+
+<select id="tipo">
+  <option value="Domicilio">🛵 Domicilio</option>
+  <option value="Retiro en restaurante">🏪 Retirar en el restaurante</option>
+</select>
+
+<button class="full" onclick="enviarPedido()">
+  📲 Enviar pedido por WhatsApp
+</button>
+
+</div>
+
+<div class="card">
+<h2>🕐 Horarios</h2>
+<p>Lunes a domingo</p>
+<p><strong>07:00 AM - 16:00 PM</strong></p>
+</div>
 
 </div>
 
 <footer>
-  Tu Hueca Esmeraldeña ❤️<br>
-  Gracias por preferirnos.
+Tu Hueca Esmeraldeña ❤️<br>
+Gracias por preferirnos.
 </footer>
 
 <script>
 
-function hacerPedido() {
-  alert("Aquí colocaremos nuestro sistema de pedidos.");
-}
+let carrito = [];
 
-function reservar() {
-  alert("Aquí colocaremos el sistema de reservas.");
-}
+function agregar(nombre, precio){
 
-function ubicacion() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      alert(
-        "Ubicación obtenida correctamente.\nLatitud: " +
-        position.coords.latitude +
-        "\nLongitud: " +
-        position.coords.longitude
-      );
+  let producto = carrito.find(p => p.nombre === nombre);
+
+  if(producto){
+    producto.cantidad++;
+  }else{
+    carrito.push({
+      nombre:nombre,
+      precio:precio,
+      cantidad:1
     });
-  } else {
-    alert("Tu teléfono no permite obtener la ubicación.");
   }
+
+  mostrarCarrito();
+}
+
+function mostrarCarrito(){
+
+  let contenedor = document.getElementById("carrito");
+  let total = 0;
+
+  if(carrito.length === 0){
+    contenedor.innerHTML = "<p>Aún no has agregado productos.</p>";
+    document.getElementById("total").innerText = "0.00";
+    return;
+  }
+
+  contenedor.innerHTML = "";
+
+  carrito.forEach((producto, indice) => {
+
+    let subtotal = producto.precio * producto.cantidad;
+    total += subtotal;
+
+    contenedor.innerHTML += `
+      <div class="cart-item">
+        <strong>${producto.nombre}</strong><br>
+        Cantidad: ${producto.cantidad}<br>
+        Subtotal: $${subtotal.toFixed(2)}
+        <br>
+        <button onclick="quitar(${indice})">
+          Quitar
+        </button>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText = total.toFixed(2);
+}
+
+function quitar(indice){
+
+  if(carrito[indice].cantidad > 1){
+    carrito[indice].cantidad--;
+  }else{
+    carrito.splice(indice,1);
+  }
+
+  mostrarCarrito();
+}
+
+function enviarPedido(){
+
+  if(carrito.length === 0){
+    alert("Primero agrega algún producto al pedido.");
+    return;
+  }
+
+  let nombre = document.getElementById("nombre").value.trim();
+  let telefono = document.getElementById("telefono").value.trim();
+  let tipo = document.getElementById("tipo").value;
+
+  if(nombre === ""){
+    alert("Por favor escribe tu nombre.");
+    return;
+  }
+
+  if(telefono === ""){
+    alert("Por favor escribe tu teléfono.");
+    return;
+  }
+
+  let mensaje = "🍽️ *NUEVO PEDIDO - TU HUECA ESMERALDEÑA*%0A%0A";
+
+  mensaje += "👤 Cliente: " + nombre + "%0A";
+  mensaje += "📞 Teléfono: " + telefono + "%0A";
+  mensaje += "📦 Tipo: " + tipo + "%0A%0A";
+
+  mensaje += "*DETALLE DEL PEDIDO:*%0A";
+
+  let total = 0;
+
+  carrito.forEach(producto => {
+
+    let subtotal = producto.precio * producto.cantidad;
+    total += subtotal;
+
+    mensaje += "• " +
+      producto.nombre +
+      " x" +
+      producto.cantidad +
+      " = $" +
+      subtotal.toFixed(2) +
+      "%0A";
+  });
+
+  mensaje += "%0A💰 *TOTAL: $" + total.toFixed(2) + "*";
+
+  let numeroWhatsApp = "593980899225";
+
+  let url = "https://wa.me/" + numeroWhatsApp + "?text=" + mensaje;
+
+  window.open(url, "_blank");
 }
 
 </script>
 
 </body>
 </html>
-Pégalo completo en el cuadro donde estás escribiendo.
-Cuando termine de pegarse, no pulses nada más. Dime “ya lo pegué” y te indico el siguiente botón que debes tocar.
+Ahora
+Pégalo completo en GitHub.
+No pulses ningún botón todavía.
+Cuando termines de pegarlo, dime simplemente “ya lo pegué” y te indico cómo guardarlo y probar el pedido.
